@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-group">
+      <input type="file" class="form-control-file mb-2" name="document">
+      <button type="submit" class="btn btn-primary">Button </button>
+    </div>
+</form>
+
+{% if url %}
+  <a href="{{url}}">Click here to see the image</a>
+{% endif %}
+{% endblock %}

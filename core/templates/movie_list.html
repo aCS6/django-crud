@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h1>All Movie</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>SL</th>
+                <th>Cover</th>
+                <th>Name</th>
+                <th>Director</th>
+                <th>Watch Trailer</th>
+                <th>Delete</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for movie in movies %}
+            <tr>
+                <td>{{ forloop.counter  }}</td>
+                <td>
+                    {% if movie.cover %}
+                    <img 
+                        src=" {{ movie.cover.url }}" 
+                        alt="#"
+                        width="50px" height="50px"
+                    >
+                    {% else %}
+                    No Cover
+                    {% endif %}
+                   
+                </td>
+                <td>{{ movie.name }}</td>
+                <td>{{ movie.director }}</td>
+                <td> 
+                    {% if movie.trailer %}
+                    <a 
+                        href="{{ movie.trailer.url }}" 
+                        class="btn btn-dark" 
+                        target="_blank"
+                    >
+                        Watch
+                    </a>
+                    {% else %}
+                    <a 
+                        href="#" 
+                        class="btn btn-dark"
+                    >
+                        Watch
+                    </a>
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{% url 'core:delete_movie' movie.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+                <td>
+
+                    <form method="PUT" action="{% url 'core:update_movie' movie.pk %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+{% endblock %}
